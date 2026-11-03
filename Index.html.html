@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nemindu – CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF1F6;--ink:#141B34;--muted:#566080;--line:#C9D0E2;--accent:#2B44FF;--chip:#fff;--onaccent:#fff;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1426;--ink:#EDF0FA;--muted:#98A2C3;--line:#2A3354;--accent:#8FA2FF;--chip:#171E38;--onaccent:#0F1426;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1426;--ink:#EDF0FA;--muted:#98A2C3;--line:#2A3354;--accent:#8FA2FF;--chip:#171E38;--onaccent:#0F1426;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1.0625rem;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem)}
+nav{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1.5rem 0;font-weight:600}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--accent)}
+.hero{padding:clamp(2rem,8vw,6rem) 0 clamp(3rem,9vw,7rem)}
+h1{margin:0;font-weight:800;font-size:clamp(3.4rem,15vw,11rem);line-height:.92;letter-spacing:-.045em}
+.headline{margin:1.75rem 0 0;max-width:46ch;font-size:clamp(1.25rem,3vw,1.75rem);line-height:1.3;font-weight:600}
+.type{margin:1.25rem 0 0;font-size:clamp(1.05rem,2.2vw,1.35rem);color:var(--muted)}
+.type b{color:var(--accent);font-weight:600}
+.caret{display:inline-block;width:.1em;height:1.05em;margin-left:2px;vertical-align:-.15em;background:var(--accent);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+section{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;padding:clamp(2.5rem,6vw,4.5rem) 0;border-top:1px solid var(--line)}
+@media (min-width:800px){section{grid-template-columns:200px minmax(0,1fr);gap:3rem}}
+h2{margin:0;font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+.about p{margin:0 0 1rem;max-width:62ch;font-size:1.2rem}
+.search{display:block;width:100%;max-width:26rem;padding:.8rem 1rem;margin-bottom:1.25rem;font:inherit;color:var(--ink);background:var(--chip);border:2px solid var(--line);border-radius:10px}
+.search:focus{border-color:var(--accent);outline:none}
+.chips{display:flex;flex-wrap:wrap;gap:.6rem;list-style:none;margin:0;padding:0}
+.chips li{padding:.45rem .95rem;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-weight:600}
+.chips li.hit{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}
+.note{margin:1rem 0 0;color:var(--muted)}
+.grp{margin:0 0 1.75rem}.grp h3{margin:0 0 .6rem;font-size:1rem;font-weight:600;color:var(--muted)}
+.edu{list-style:none;margin:0;padding:0}
+.edu li{display:grid;gap:.15rem;padding:0 0 1.75rem 1.5rem;border-left:2px solid var(--line);position:relative}
+.edu li:last-child{padding-bottom:0}
+.edu li::before{content:"";position:absolute;left:-7px;top:.5rem;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.edu strong{font-size:1.2rem}
+.edu span{color:var(--muted)}
+.mail{display:inline-block;font-size:clamp(1.4rem,4.5vw,2.75rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;text-decoration-thickness:3px;text-underline-offset:.2em;text-decoration-color:var(--accent);overflow-wrap:anywhere}
+.mail:hover{color:var(--accent)}
+.meta{margin:1.25rem 0 0;color:var(--muted)}
+.social{display:flex;flex-wrap:wrap;gap:.75rem;list-style:none;margin:1.75rem 0 0;padding:0}
+.social a{display:inline-block;padding:.6rem 1.1rem;border:2px solid var(--ink);border-radius:10px;font-weight:600;text-decoration:none}
+.social a:hover{background:var(--ink);color:var(--bg)}
+footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);font-size:.95rem}
+.tc{display:inline-block;width:0;height:1em;position:relative;vertical-align:-.12em}
+.tc::after{content:"";position:absolute;left:0;top:0;width:.07em;min-width:2px;height:100%;background:var(--accent);animation:blink 1s steps(1) infinite}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav aria-label="Sections">
+    <a href="#about">About</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a>
+  </nav>
+
+  <header class="hero">
+    <h1>I am Nemindu</h1>
+    <p class="headline" id="headline">Creative Technologist | Focused on Coding, Automation & Digital Solutions | Committed to Lifelong Learning</p>
+    <p class="type" aria-live="off">I’m skilled in <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
+  </header>
+
+  <section id="about" class="about">
+    <h2>About me</h2>
+    <div>
+      <p>I am a motivated and forward-thinking individual with an educational background in Commerce, specialising in Accounting, Business Studies, and ICT. I have a strong interest in technology, AI, cybersecurity, and graphic design, with a commitment to continuous learning and professional development.</p>
+      <p>I aim to combine analytical thinking, creativity, and technical knowledge to contribute to innovative projects and meaningful opportunities.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div>
+      <label for="q" class="note" style="display:block;margin:0 0 .5rem">Type a skill to find it</label>
+      <input id="q" class="search" type="search" placeholder="Try “Azure” or “design”" autocomplete="off">
+      <div id="chips"></div>
+      <p class="note" id="none" hidden>No skill matches that yet.</p>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <ol class="edu">
+      <li><strong>G.C.E. Advanced Level, Commerce stream</strong><span>Bandaranayake College, Gampaha</span><span>2025 – 2026</span><span>Accounting, Business Studies, ICT</span></li>
+      <li><strong>G.C.E. Ordinary Level</strong><span>Bandaranayake College, Gampaha</span><span>2011 – 2024</span><span>Mathematics, Science, Commerce, ICT, English, English Literature, Sinhala, History</span></li>
+    </ol>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div>
+      <a class="mail" href="mailto:shan.kobewatta@gmail.com">shan.kobewatta@gmail.com</a>
+      <p class="meta"><a href="tel:+94768808629">076 880 8629</a><br>31/1 Paranveyangoda, Nittambuwa</p>
+      <ul class="social">
+        <li><a href="https://www.linkedin.com/in/nemindu-shan-kobewatta-763a0b37a/" rel="noopener">LinkedIn</a></li>
+        
+        <li><a href="https://www.instagram.com/shan.local.host" rel="noopener">Instagram</a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+  <footer>© Nemindu</footer>
+</div>
+
+<script>
+var TYPED=["HTML","Python","Cybersecurity","Graphic design","Problem-solving","GitHub","Git"];
+var GROUPS=[["Coding and tools",["HTML","Python","Git","GitHub"]],["AI and technology",["Generative AI and agents","AI & Emerging Technologies"]],["Cybersecurity and networking",["Microsoft Certified Cybersecurity Fundamentals","Azure Fundamentals","Diploma in Computer Networking (Alison)"]],["Creative",["Graphic design","Creativity"]],["Business and analytical",["Accounting Fundamentals","Business Studies","Problem-solving","Analytical thinking"]]];
+var chips=document.getElementById("chips"),q=document.getElementById("q"),none=document.getElementById("none");
+GROUPS.forEach(function(g){var d=document.createElement("div");d.className="grp";var h=document.createElement("h3");h.textContent=g[0];var u=document.createElement("ul");u.className="chips";g[1].forEach(function(s){var li=document.createElement("li");li.textContent=s;u.appendChild(li)});d.appendChild(h);d.appendChild(u);chips.appendChild(d)});
+q.addEventListener("input",function(){
+  var v=q.value.trim().toLowerCase(),shown=0;
+  Array.prototype.forEach.call(chips.querySelectorAll("li"),function(li){
+    var m=!v||li.textContent.toLowerCase().indexOf(v)>-1;
+    li.hidden=!m;li.className=(v&&m)?"hit":"";if(m)shown++;
+  });
+  Array.prototype.forEach.call(chips.querySelectorAll(".grp"),function(g){g.hidden=!g.querySelector("li:not([hidden])")});
+  none.hidden=shown>0;
+});
+var el=document.getElementById("typed"),i=0,j=0,del=false;
+var still=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(still){el.textContent=TYPED.slice(0,3).join(", ")}
+else{window.startSkills=function tick(){
+  var w=TYPED[i];
+  el.textContent=w.slice(0,j);
+  if(!del&&j<w.length){j++;setTimeout(tick,85)}
+  else if(!del){del=true;setTimeout(tick,1300)}
+  else if(j>0){j--;setTimeout(tick,40)}
+  else{del=false;i=(i+1)%TYPED.length;setTimeout(tick,300)}
+};}
+if(!still){(function(){
+var busy=true;
+function nodesIn(root){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),a=[],n;
+while(n=w.nextNode()){if(n.nodeValue.trim()&&!n.parentNode.closest('script,style,#typed,.caret'))a.push(n)}return a}
+function prep(root){return nodesIn(root).map(function(n){
+var full=n.nodeValue,t=document.createTextNode(''),r=document.createElement('span'),p=n.parentNode;
+r.style.visibility='hidden';r.textContent=full;p.replaceChild(r,n);p.insertBefore(t,r);
+var c=p.closest('h1')?14:p.closest('.headline')?90:260;
+return{t:t,r:r,p:p,full:full,cps:c}})}
+function run(items,done){
+var caret=document.createElement('span');caret.className='tc';caret.setAttribute('aria-hidden','true');
+var k=0,t0=null,c=-1;
+function step(ts){
+if(k>=items.length){if(caret.parentNode)caret.parentNode.removeChild(caret);done();return}
+var it=items[k];
+if(t0===null){t0=ts;c=-1}
+var n=Math.min(it.full.length,Math.floor((ts-t0)/1000*it.cps));
+if(n!==c){c=n;it.t.nodeValue=it.full.slice(0,n);it.r.textContent=it.full.slice(n);it.p.insertBefore(caret,it.r)}
+if(n>=it.full.length){it.p.insertBefore(document.createTextNode(it.full),it.t);it.p.removeChild(it.t);it.p.removeChild(it.r);k++;t0=null}
+requestAnimationFrame(step)}
+requestAnimationFrame(step)}
+var heroItems=prep(document.querySelector('nav')).concat(prep(document.querySelector('.hero')));
+var secs=Array.prototype.map.call(document.querySelectorAll('section,footer'),function(el){return{el:el,items:prep(el),seen:false,started:false}});
+function pump(){if(busy)return;for(var x=0;x<secs.length;x++){var s=secs[x];if(s.seen&&!s.started){s.started=true;busy=true;run(s.items,function(){busy=false;pump()});return}}}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){secs.forEach(function(s){if(s.el===e.target){s.seen=true;io.unobserve(e.target)}});pump()}})},{rootMargin:'0px 0px -8% 0px'});secs.forEach(function(s){io.observe(s.el)})}else{secs.forEach(function(s){s.seen=true})}
+run(heroItems,function(){busy=false;if(window.startSkills)window.startSkills();pump()})
+})()}
+</script>
+</body>
+</html>
