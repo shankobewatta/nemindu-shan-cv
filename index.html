@@ -17,9 +17,18 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grote
 a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem)}
-nav{display:flex;gap:1.5rem;flex-wrap:wrap;padding:1.5rem 0;font-weight:600}
-nav a{text-decoration:none;color:var(--muted)}
-nav a:hover{color:var(--accent)}
+nav{position:relative;display:inline-flex;align-items:center;gap:.25rem;flex-wrap:wrap;margin:1.25rem 0;padding:.35rem;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-weight:600;box-shadow:0 8px 24px rgba(20,27,52,.06)}
+nav a{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:.55rem 1rem;border-radius:999px;text-decoration:none;color:var(--muted);transition:color .3s ease}
+nav a::before{content:"";position:absolute;z-index:-1;inset:0;border-radius:inherit;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+nav a:hover::before,nav a:focus-visible::before,nav a[aria-current="location"]::before{transform:scaleY(1)}
+nav a:hover,nav a:focus-visible,nav a[aria-current="location"]{color:var(--onaccent)}
+.nav-label{position:relative;display:block;overflow:hidden;height:1.5em;line-height:1.5em}
+.nav-label span{display:block;transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+.nav-label span:last-child{position:absolute;left:0;top:100%;white-space:nowrap}
+nav a:hover .nav-label span,nav a:focus-visible .nav-label span{transform:translateY(-100%)}
+.nav-dot{position:absolute;z-index:2;left:0;bottom:-.12rem;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+nav.has-active .nav-dot{opacity:1}
+@media(max-width:480px){nav{display:flex;width:100%;gap:.1rem}nav a{flex:1;padding:.5rem .4rem;font-size:.9rem}}
 .hero{padding:clamp(2rem,8vw,6rem) 0 clamp(3rem,9vw,7rem)}
 h1{margin:0;font-weight:800;font-size:clamp(3.4rem,15vw,11rem);line-height:.92;letter-spacing:-.045em}
 .headline{margin:1.75rem 0 0;max-width:46ch;font-size:clamp(1.25rem,3vw,1.75rem);line-height:1.3;font-weight:600}
@@ -56,8 +65,12 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 </head>
 <body>
 <div class="wrap">
-  <nav aria-label="Sections">
-    <a href="#about">About</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a>
+  <nav aria-label="Sections" id="section-nav">
+    <a href="#about" aria-current="location"><span class="nav-label"><span>About</span><span aria-hidden="true">About</span></span></a>
+    <a href="#skills"><span class="nav-label"><span>Skills</span><span aria-hidden="true">Skills</span></span></a>
+    <a href="#education"><span class="nav-label"><span>Education</span><span aria-hidden="true">Education</span></span></a>
+    <a href="#contact"><span class="nav-label"><span>Contact</span><span aria-hidden="true">Contact</span></span></a>
+    <span class="nav-dot" aria-hidden="true"></span>
   </nav>
 
   <header class="hero">
@@ -110,6 +123,33 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 var TYPED=["HTML","Python","Cybersecurity","Graphic design","Problem-solving","GitHub","Git"];
 var GROUPS=[["Coding and tools",["HTML","Python","Git","GitHub"]],["AI and technology",["Generative AI and agents","AI & Emerging Technologies"]],["Cybersecurity and networking",["Microsoft Certified Cybersecurity Fundamentals","Azure Fundamentals","Diploma in Computer Networking (Alison)"]],["Creative",["Graphic design","Creativity"]],["Business and analytical",["Accounting Fundamentals","Business Studies","Problem-solving","Analytical thinking"]]];
 var chips=document.getElementById("chips");
+var sectionNav=document.getElementById("section-nav");
+var navLinks=Array.prototype.slice.call(sectionNav.querySelectorAll("a"));
+var navDot=sectionNav.querySelector(".nav-dot");
+function setActiveNav(link){
+  navLinks.forEach(function(a){a.removeAttribute("aria-current")});
+  link.setAttribute("aria-current","location");
+  var x=link.offsetLeft+link.offsetWidth/2-navDot.offsetWidth/2;
+  navDot.style.transform="translateX("+x+"px)";
+  sectionNav.classList.add("has-active");
+}
+navLinks.forEach(function(link){link.addEventListener("click",function(){setActiveNav(link)})});
+setActiveNav(navLinks[0]);
+window.addEventListener("resize",function(){
+  var active=sectionNav.querySelector('a[aria-current="location"]')||navLinks[0];
+  setActiveNav(active);
+});
+if("IntersectionObserver" in window){
+  var navObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var active=navLinks.find(function(a){return a.getAttribute("href")==="#"+entry.target.id});
+        if(active)setActiveNav(active);
+      }
+    });
+  },{rootMargin:"-25% 0px -65% 0px"});
+  document.querySelectorAll("section[id]").forEach(function(section){navObserver.observe(section)});
+}
 GROUPS.forEach(function(g){var d=document.createElement("div");d.className="grp";var h=document.createElement("h3");h.textContent=g[0];var u=document.createElement("ul");u.className="chips";g[1].forEach(function(s){var li=document.createElement("li");li.textContent=s;u.appendChild(li)});d.appendChild(h);d.appendChild(u);chips.appendChild(d)});
 var el=document.getElementById("typed"),i=0,j=0,del=false;
 var still=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -143,7 +183,7 @@ if(n!==c){c=n;it.t.nodeValue=it.full.slice(0,n);it.r.textContent=it.full.slice(n
 if(n>=it.full.length){it.p.insertBefore(document.createTextNode(it.full),it.t);it.p.removeChild(it.t);it.p.removeChild(it.r);k++;t0=null}
 requestAnimationFrame(step)}
 requestAnimationFrame(step)}
-var heroItems=prep(document.querySelector('nav')).concat(prep(document.querySelector('.hero')));
+var heroItems=prep(document.querySelector('.hero'));
 var secs=Array.prototype.map.call(document.querySelectorAll('section,footer'),function(el){return{el:el,items:prep(el),seen:false,started:false}});
 function pump(){if(busy)return;for(var x=0;x<secs.length;x++){var s=secs[x];if(s.seen&&!s.started){s.started=true;busy=true;run(s.items,function(){busy=false;pump()});return}}}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){secs.forEach(function(s){if(s.el===e.target){s.seen=true;io.unobserve(e.target)}});pump()}})},{rootMargin:'0px 0px -8% 0px'});secs.forEach(function(s){io.observe(s.el)})}else{secs.forEach(function(s){s.seen=true})}
