@@ -31,8 +31,6 @@ section{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;padding:clamp(
 @media (min-width:800px){section{grid-template-columns:200px minmax(0,1fr);gap:3rem}}
 h2{margin:0;font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
 .about p{margin:0 0 1rem;max-width:62ch;font-size:1.2rem}
-.search{display:block;width:100%;max-width:26rem;padding:.8rem 1rem;margin-bottom:1.25rem;font:inherit;color:var(--ink);background:var(--chip);border:2px solid var(--line);border-radius:10px}
-.search:focus{border-color:var(--accent);outline:none}
 .chips{display:flex;flex-wrap:wrap;gap:.6rem;list-style:none;margin:0;padding:0}
 .chips li{padding:.45rem .95rem;background:var(--chip);border:1px solid var(--line);border-radius:999px;font-weight:600}
 .chips li.hit{background:var(--accent);border-color:var(--accent);color:var(--onaccent)}
@@ -79,9 +77,7 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
   <section id="skills">
     <h2>Skills</h2>
     <div>
-      <input id="q" class="search" type="search" placeholder="Try “Azure” or “design”" autocomplete="off">
       <div id="chips"></div>
-      <p class="note" id="none" hidden>No skill matches that yet.</p>
     </div>
   </section>
 
@@ -113,17 +109,8 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 <script>
 var TYPED=["HTML","Python","Cybersecurity","Graphic design","Problem-solving","GitHub","Git"];
 var GROUPS=[["Coding and tools",["HTML","Python","Git","GitHub"]],["AI and technology",["Generative AI and agents","AI & Emerging Technologies"]],["Cybersecurity and networking",["Microsoft Certified Cybersecurity Fundamentals","Azure Fundamentals","Diploma in Computer Networking (Alison)"]],["Creative",["Graphic design","Creativity"]],["Business and analytical",["Accounting Fundamentals","Business Studies","Problem-solving","Analytical thinking"]]];
-var chips=document.getElementById("chips"),q=document.getElementById("q"),none=document.getElementById("none");
+var chips=document.getElementById("chips");
 GROUPS.forEach(function(g){var d=document.createElement("div");d.className="grp";var h=document.createElement("h3");h.textContent=g[0];var u=document.createElement("ul");u.className="chips";g[1].forEach(function(s){var li=document.createElement("li");li.textContent=s;u.appendChild(li)});d.appendChild(h);d.appendChild(u);chips.appendChild(d)});
-q.addEventListener("input",function(){
-  var v=q.value.trim().toLowerCase(),shown=0;
-  Array.prototype.forEach.call(chips.querySelectorAll("li"),function(li){
-    var m=!v||li.textContent.toLowerCase().indexOf(v)>-1;
-    li.hidden=!m;li.className=(v&&m)?"hit":"";if(m)shown++;
-  });
-  Array.prototype.forEach.call(chips.querySelectorAll(".grp"),function(g){g.hidden=!g.querySelector("li:not([hidden])")});
-  none.hidden=shown>0;
-});
 var el=document.getElementById("typed"),i=0,j=0,del=false;
 var still=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(still){el.textContent=TYPED.slice(0,3).join(", ")}
