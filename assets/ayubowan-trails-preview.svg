@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#123c42"/><stop offset=".58" stop-color="#28645a"/><stop offset="1" stop-color="#d69a4b"/></linearGradient>
+ <linearGradient id="hill" x2="0" y2="1"><stop stop-color="#78965c"/><stop offset="1" stop-color="#183f37"/></linearGradient>
+ <linearGradient id="gold" x2="1" y2="1"><stop stop-color="#f6d47b"/><stop offset="1" stop-color="#d59b32"/></linearGradient>
+ <filter id="shadow"><feGaussianBlur stdDeviation="16"/></filter>
+</defs>
+<rect width="1200" height="675" fill="#f7f0df"/>
+<rect width="1200" height="560" fill="url(#sky)"/>
+<circle cx="950" cy="160" r="88" fill="#f4d99b" opacity=".8"/>
+<path d="M0 430 180 270 310 390 480 220 680 420 850 280 1030 420 1200 270V590H0Z" fill="#315e4c" opacity=".75"/>
+<path d="M0 485 190 360 330 450 520 310 690 480 880 350 1040 470 1200 370V590H0Z" fill="url(#hill)"/>
+<path d="M0 540Q200 460 400 520T800 500T1200 510V590H0Z" fill="#17463c"/>
+<g opacity=".7" fill="#f4d99b"><path d="M80 400q35-100 70 0z"/><path d="M100 400q30-75 60 0z"/><path d="M1060 420q30-95 60 0z"/></g>
+<rect x="48" y="34" width="1104" height="74" rx="18" fill="#fff8e9" opacity=".96"/>
+<circle cx="91" cy="71" r="20" fill="#8d153a"/><path d="M82 75q9-18 18 0" fill="none" stroke="#f5d17a" stroke-width="3"/>
+<text x="125" y="79" font-family="Georgia,serif" font-size="28" font-weight="bold" fill="#8d153a">AYUBOWAN TRAILS</text>
+<g font-family="Arial,sans-serif" font-size="15" fill="#315047"><text x="710" y="78">HOME</text><text x="800" y="78">STAY</text><text x="875" y="78">PLACES</text><text x="970" y="78">EAT</text><text x="1030" y="78">MAP</text></g>
+<rect x="48" y="150" width="540" height="320" rx="28" fill="#112c2b" opacity=".24" filter="url(#shadow)"/>
+<text x="82" y="218" font-family="Georgia,serif" font-size="22" fill="#f6d47b" letter-spacing="4">DISCOVER THE ISLAND</text>
+<text x="78" y="300" font-family="Georgia,serif" font-size="68" font-weight="bold" fill="#fff8e9">Sri Lanka,</text>
+<text x="78" y="374" font-family="Georgia,serif" font-size="68" font-weight="bold" fill="#f6d47b">Your Way.</text>
+<text x="82" y="416" font-family="Arial,sans-serif" font-size="20" fill="#fff8e9">Find places, stays and experiences</text>
+<text x="82" y="445" font-family="Arial,sans-serif" font-size="20" fill="#fff8e9">across the Pearl of the Indian Ocean.</text>
+<rect x="82" y="488" width="210" height="54" rx="27" fill="url(#gold)"/>
+<text x="187" y="522" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="bold" fill="#452b1b">EXPLORE SRI LANKA</text>
+<rect x="48" y="586" width="1104" height="58" rx="14" fill="#fff8e9"/>
+<g font-family="Arial,sans-serif" fill="#315047"><text x="78" y="621" font-size="16" font-weight="bold">DESTINATIONS</text><text x="330" y="621" font-size="16" font-weight="bold">PLACES TO STAY</text><text x="610" y="621" font-size="16" font-weight="bold">LOCAL FOOD</text><text x="860" y="621" font-size="16" font-weight="bold">TRANSPORT</text></g>
+</svg>
