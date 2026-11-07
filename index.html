@@ -84,12 +84,13 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 @media(hover:none),(prefers-reduced-motion:reduce){.project-card{transform:none!important;transition:box-shadow .2s ease}.project-card:hover{--lift:0px}.project-card:hover .project-media img{transform:none}}
 
 
-/* Hero portrait */
-.hero-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,310px);align-items:center;gap:clamp(2rem,6vw,5rem)}
-.hero-copy{min-width:0}
-.hero-portrait{width:100%;max-width:310px;justify-self:end;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);border-radius:28px;background:var(--chip);box-shadow:0 24px 60px rgba(20,27,52,.16);position:relative}
-.hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 18%}
-@media(max-width:700px){.hero-layout{grid-template-columns:minmax(0,1fr);gap:2rem}.hero-portrait{width:min(72%,270px);justify-self:start;aspect-ratio:4/5}.hero{padding-top:2rem}}
+/* Hero portrait — transparent cut-out, spaced clear of the name */
+.hero-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,260px);align-items:center;column-gap:clamp(3rem,7vw,6rem);row-gap:2rem}
+.hero-copy{min-width:0;max-width:100%}
+.hero-copy h1{font-size:clamp(3.2rem,9.5vw,8rem);overflow-wrap:normal}
+.hero-portrait{width:100%;max-width:250px;justify-self:end;align-self:end;position:relative;display:flex;align-items:flex-end;justify-content:center;margin-left:1rem;transform:translateX(.75rem);background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
+.hero-portrait img{display:block;width:100%;height:auto;max-height:440px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 24px rgba(20,27,52,.18))}
+@media(max-width:700px){.hero-layout{grid-template-columns:minmax(0,1fr);gap:1.5rem}.hero-copy h1{font-size:clamp(3.2rem,14vw,6rem)}.hero-portrait{width:min(62%,230px);max-width:230px;justify-self:end;margin-left:0;transform:none}.hero-portrait img{max-height:360px}.hero{padding-top:2rem}}
 
 </style>
 </head>
