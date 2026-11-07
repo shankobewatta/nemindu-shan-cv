@@ -84,6 +84,12 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 @media(hover:none),(prefers-reduced-motion:reduce){.project-card{transform:none!important;transition:box-shadow .2s ease}.project-card:hover{--lift:0px}.project-card:hover .project-media img{transform:none}}
 
 
+
+/* Particle portrait: pixels disperse into a soft vortex, then reform */
+.hero-portrait{isolation:isolate}
+.hero-portrait img{opacity:0}
+.particle-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+
 /* Hero portrait — larger cut-out with the introduction layered in front */
 .hero-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,400px);align-items:center;column-gap:clamp(1.5rem,3vw,2.5rem);row-gap:1.5rem}
 .hero-copy{min-width:0;max-width:100%;position:relative;z-index:2}
@@ -113,7 +119,7 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
         <p class="type" aria-live="off">I’m skilled in <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
       </div>
       <div class="hero-portrait">
-        <img src="assets/profile.png" alt="Portrait of Nemindu Shan" fetchpriority="high">
+        <img src="assets/profile.png" alt="Portrait of Nemindu Shan" fetchpriority="high"><canvas class="particle-canvas" aria-hidden="true"></canvas>
       </div>
     </div>
   </header>
@@ -208,6 +214,65 @@ if("IntersectionObserver" in window){
   },{rootMargin:"-25% 0px -65% 0px"});
   document.querySelectorAll("section[id]").forEach(function(section){navObserver.observe(section)});
 }
+
+
+// Particle portrait effect — swirl apart and reform on hover, with one intro reveal
+(function(){
+  var portrait=document.querySelector('.hero-portrait');
+  var img=portrait&&portrait.querySelector('img');
+  var canvas=portrait&&portrait.querySelector('.particle-canvas');
+  if(!portrait||!img||!canvas||!canvas.getContext)return;
+  var ctx=canvas.getContext('2d'),particles=[],w=0,h=0,dpr=1,burstStart=0,bursting=false,raf=0;
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var source=document.createElement('canvas'),sctx=source.getContext('2d',{willReadFrequently:true});
+  function build(){
+    if(!img.naturalWidth||!img.naturalHeight)return;
+    var rect=portrait.getBoundingClientRect();
+    w=Math.max(1,rect.width);h=Math.max(1,rect.height);dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var sw=Math.min(360,Math.round(w*0.9)),sh=Math.round(sw*img.naturalHeight/img.naturalWidth);
+    source.width=sw;source.height=sh;sctx.clearRect(0,0,sw,sh);sctx.drawImage(img,0,0,sw,sh);
+    var pixels=sctx.getImageData(0,0,sw,sh).data,scale=w/sw,offsetX=(w-sw*scale)/2,offsetY=h-sh*scale;
+    particles=[];
+    for(var y=0;y<sh;y+=3){for(var x=0;x<sw;x+=3){
+      var k=(y*sw+x)*4,a=pixels[k+3]/255;
+      if(a<.18)continue;
+      var ox=offsetX+x*scale,oy=offsetY+y*scale;
+      particles.push({x:ox,y:oy,tx:ox,ty:oy,color:'rgba('+pixels[k]+','+pixels[k+1]+','+pixels[k+2]+','+a+')',size:(1.1+Math.random()*1.1)*scale,phase:Math.random()*Math.PI*2,spin:(Math.random()-.5)*2});
+    }}
+    draw(0);
+  }
+  function draw(progress){
+    ctx.clearRect(0,0,w,h);
+    var eased=progress<.5?Math.pow(progress*2,1.4):Math.pow((1-progress)*2,1.4);
+    particles.forEach(function(p){
+      var angle=p.phase+eased*5.5*p.spin+eased*2.8;
+      var radius=eased*(35+((p.x/w)*45)+(p.phase%1)*30);
+      var dx=Math.cos(angle)*radius,dy=Math.sin(angle)*radius-radius*.22;
+      var x=p.x+dx,y=p.y+dy;
+      ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(x,y,p.size,0,Math.PI*2);ctx.fill();
+    });
+  }
+  function frame(now){
+    if(!bursting)return;
+    var progress=Math.min(1,(now-burstStart)/1900);
+    draw(progress);
+    if(progress<1)raf=requestAnimationFrame(frame);
+    else{bursting=false;draw(0)}
+  }
+  function burst(){
+    if(reduced||!particles.length||bursting)return;
+    bursting=true;burstStart=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);
+  }
+  function start(){
+    build();
+    if(!reduced){setTimeout(burst,650);portrait.addEventListener('pointerenter',burst)}
+  }
+  if(img.complete)start();else img.addEventListener('load',start,{once:true});
+  if('ResizeObserver' in window){new ResizeObserver(function(){if(!bursting)build()}).observe(portrait)}
+  else window.addEventListener('resize',function(){if(!bursting)build()});
+})();
 
 // Subtle 3D depth tilt for project cards (pointer devices only)
 document.querySelectorAll(".project-card").forEach(function(card){
