@@ -89,8 +89,10 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 .hero-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,400px);align-items:center;column-gap:clamp(1.5rem,3vw,2.5rem);row-gap:1.5rem}
 .hero-copy{min-width:0;max-width:100%;position:relative;z-index:2}
 .hero-copy h1{font-size:clamp(3.2rem,9vw,8rem);overflow-wrap:normal}
-.hero-portrait{width:100%;max-width:400px;justify-self:end;align-self:end;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:center;margin-left:-1rem;transform:translateX(.5rem);background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible;pointer-events:none}
-.hero-portrait img{display:block;width:100%;height:auto;max-height:600px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 24px rgba(20,27,52,.18));transition:filter .12s ease;will-change:filter}
+.hero-portrait{width:100%;max-width:400px;justify-self:end;align-self:end;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:center;margin-left:-1rem;transform:translateX(.5rem);background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible;pointer-events:auto;isolation:isolate}
+.hero-portrait img{display:block;width:100%;height:auto;max-height:600px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 24px rgba(20,27,52,.18));transform-origin:center bottom;transition:transform .12s ease;will-change:transform;position:relative;z-index:0}
+.portrait-light{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(circle 175px at var(--light-x,50%) var(--light-y,50%),rgba(255,255,255,.78) 0%,rgba(139,174,255,.34) 34%,rgba(139,174,255,.12) 55%,transparent 75%);-webkit-mask-image:url('assets/profile.png');mask-image:url('assets/profile.png');-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;mix-blend-mode:screen;transition:opacity .18s ease}
+.hero-portrait.is-lit .portrait-light{opacity:1}
 @media(max-width:700px){.hero-layout{grid-template-columns:minmax(0,1fr);gap:1rem}.hero-copy h1{font-size:clamp(3.2rem,14vw,6rem)}.hero-portrait{width:min(88%,340px);max-width:340px;justify-self:end;margin-left:0;transform:none}.hero-portrait img{max-height:480px}.hero{padding-top:2rem}}
 
 </style>
@@ -115,6 +117,7 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
       </div>
       <div class="hero-portrait">
         <img src="assets/profile.png" alt="Portrait of Nemindu Shan" fetchpriority="high">
+        <span class="portrait-light" aria-hidden="true"></span>
       </div>
     </div>
   </header>
@@ -211,39 +214,37 @@ if("IntersectionObserver" in window){
 }
 
 
-// Cursor-following depth light for the transparent hero portrait
+// Cursor-following light clipped to the transparent portrait silhouette
 (function(){
   var portrait=document.querySelector('.hero-portrait');
   var img=portrait&&portrait.querySelector('img');
-  if(!portrait||!img)return;
+  var light=portrait&&portrait.querySelector('.portrait-light');
+  if(!portrait||!img||!light)return;
   var finePointer=window.matchMedia&&window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if(!finePointer)return;
-  var raf=0,lastX=0,lastY=0;
+  var raf=0,x=50,y=50;
   function move(e){
     var r=img.getBoundingClientRect();
-    var x=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
-    var y=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));
-    lastX=x;lastY=y;
+    if(!r.width||!r.height)return;
+    x=Math.max(0,Math.min(100,((e.clientX-r.left)/r.width)*100));
+    y=Math.max(0,Math.min(100,((e.clientY-r.top)/r.height)*100));
     if(raf)return;
     raf=requestAnimationFrame(function(){
       raf=0;
-      var px=(lastX-.5)*100,py=(lastY-.5)*100;
-      img.style.filter='drop-shadow(0 18px 24px rgba(20,27,52,.18)) drop-shadow(0 0 18px rgba(112,151,255,.16)) brightness(1.12) contrast(1.06)';
-      img.style.setProperty('--light-x',px+'%');
-      img.style.setProperty('--light-y',py+'%');
-      img.style.filter='drop-shadow(0 18px 24px rgba(20,27,52,.18)) drop-shadow(0 0 24px rgba(120,160,255,.28)) brightness(1.12) contrast(1.06)';
-      img.style.transform='perspective(900px) rotateY('+((lastX-.5)*5).toFixed(2)+'deg) rotateX('+((.5-lastY)*4).toFixed(2)+'deg) scale(1.015)';
+      light.style.setProperty('--light-x',x+'%');
+      light.style.setProperty('--light-y',y+'%');
+      portrait.classList.add('is-lit');
+      img.style.transform='perspective(900px) rotateY('+((x/100-.5)*5).toFixed(2)+'deg) rotateX('+((.5-y/100)*4).toFixed(2)+'deg) scale(1.015)';
     });
   }
   function leave(){
-    img.style.filter='';
+    portrait.classList.remove('is-lit');
     img.style.transform='';
   }
-  img.addEventListener('pointermove',move);
-  img.addEventListener('pointerleave',leave);
+  portrait.addEventListener('pointermove',move);
+  portrait.addEventListener('pointerleave',leave);
 })();
-
-
+ 
 // Subtle 3D depth tilt for project cards (pointer devices only)
 document.querySelectorAll(".project-card").forEach(function(card){
   card.addEventListener("pointermove",function(e){
