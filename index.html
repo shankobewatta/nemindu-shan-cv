@@ -347,9 +347,14 @@ if("IntersectionObserver" in window){
   aura.className='cursor-aura';core.className='cursor-core';
   document.body.appendChild(aura);document.body.appendChild(core);
   var x=-100,y=-100,ax=-100,ay=-100,raf=0;
+  function follow(){
+    ax+=(x-ax)*.22;ay+=(y-ay)*.22;
+    aura.style.left=ax+'px';aura.style.top=ay+'px';
+    if(Math.abs(x-ax)>.15||Math.abs(y-ay)>.15){raf=requestAnimationFrame(follow)}else{raf=0}
+  }
   document.addEventListener('pointermove',function(e){
     x=e.clientX;y=e.clientY;core.style.left=x+'px';core.style.top=y+'px';
-    if(!raf)raf=requestAnimationFrame(function(){raf=0;ax+=(x-ax)*.22;ay+=(y-ay)*.22;aura.style.left=ax+'px';aura.style.top=ay+'px';});
+    if(!raf)raf=requestAnimationFrame(follow);
     document.body.classList.add('cursor-ready');
   });
   document.querySelectorAll('a,button').forEach(function(el){
