@@ -95,6 +95,61 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 .hero-portrait.is-lit .portrait-light{opacity:1}
 @media(max-width:700px){.hero-layout{grid-template-columns:minmax(0,1fr);gap:1rem}.hero-copy{margin-right:0;pointer-events:auto}.hero-copy h1{font-size:clamp(3.2rem,14vw,6rem)}.hero-portrait{width:min(100%,390px);max-width:390px;justify-self:end;margin-left:0;transform:none}.hero-portrait img{max-height:520px}.hero{padding-top:2rem}}
 
+
+/* Cinematic portfolio-inspired opening hero */
+:root{--bg:#08090c;--ink:#f4f1ed;--muted:#aaa6a1;--line:#27272b;--accent:#f0442e;--chip:#111216;--onaccent:#fff;color-scheme:dark}
+body{background:#08090c;color:#f4f1ed}
+nav{background:rgba(17,18,22,.88);border-color:#29292e;box-shadow:0 10px 35px rgba(0,0,0,.3);backdrop-filter:blur(14px)}
+nav a{color:#aaa6a1}
+.hero{min-height:min(790px,calc(100svh - 72px));padding:clamp(2.5rem,7vh,5.5rem) 0 2rem;display:flex;align-items:center;overflow:hidden}
+.hero-layout{width:100%;min-height:590px;grid-template-columns:minmax(0,1fr) minmax(300px,48%);align-items:center;column-gap:0;position:relative;isolation:isolate}
+.hero-layout::before{content:"";position:absolute;inset:-5% -10%;z-index:-3;background:radial-gradient(ellipse at 72% 52%,rgba(105,26,20,.22),transparent 42%),linear-gradient(115deg,transparent 55%,rgba(255,255,255,.018));pointer-events:none}
+.hero-backdrop-word{position:absolute;z-index:-1;left:0;top:7%;width:100%;white-space:nowrap;overflow:hidden;font-size:clamp(6.5rem,19vw,17rem);font-weight:800;line-height:.78;letter-spacing:-.085em;color:#e63c2b;background:linear-gradient(180deg,#ff6248 0%,#d52b20 48%,rgba(105,20,17,.08) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;pointer-events:none;user-select:none}
+.hero-copy{grid-column:1;grid-row:1;align-self:center;max-width:590px;margin:3rem -5rem 1rem 0;padding-top:2rem;z-index:4;pointer-events:auto}
+.hero-eyebrow{display:flex;align-items:center;gap:.65rem;margin:0 0 1.4rem;color:#d4d0ca;font-size:.72rem;font-weight:700;letter-spacing:.19em}
+.eyebrow-dot{width:8px;height:8px;flex:0 0 auto;border-radius:50%;background:#f0442e;box-shadow:0 0 15px rgba(240,68,46,.8)}
+.eyebrow-line{width:30px;height:1px;background:#77716b}
+.hero-copy h1{font-size:clamp(3.3rem,7.2vw,7rem);line-height:.86;letter-spacing:-.075em;color:#f7f4f0;overflow:visible}
+.hero-copy h1 .hello-line{display:block;margin-bottom:.65rem;font-size:clamp(1.2rem,2vw,1.8rem);font-weight:600;letter-spacing:-.035em;color:#e5dfd9}
+.hero-copy h1 .name-line{display:block;font-weight:800}
+.name-period{color:#f0442e}
+.hero-copy .headline{max-width:370px;margin:1.4rem 0 0;font-size:clamp(1rem,1.45vw,1.18rem);line-height:1.5;color:#c3bfba;font-weight:400}
+.hero-copy .type{margin:1.15rem 0 0;font-size:.76rem;letter-spacing:.12em;color:#8e8984}
+.hero-copy .type b{color:#ff5a43}
+.hero-location{margin:2rem 0 0;color:#8e8984;font-size:.64rem;font-weight:700;letter-spacing:.14em}
+.hero-location span{padding:0 .45rem;color:#f0442e}
+.hero-portrait{grid-column:2;grid-row:1;align-self:end;justify-self:center;width:125%;max-width:690px;margin:0 0 -2rem -5rem;transform:none;z-index:2;overflow:visible}
+.hero-portrait img{width:100%;max-height:690px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 24px 35px rgba(0,0,0,.55));}
+.portrait-light{background:radial-gradient(circle 190px at var(--light-x,50%) var(--light-y,50%),rgba(255,255,255,.85) 0%,rgba(255,111,83,.42) 32%,rgba(255,70,45,.12) 56%,transparent 76%);mix-blend-mode:screen}
+.hero-bottom-mark{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:.8rem;color:#77736f;font-size:.62rem;font-weight:700;letter-spacing:.16em}
+.hero-bottom-mark>span:first-child{color:#f0442e}
+.hero-bottom-rule{height:1px;flex:1;background:#303034}
+.scroll-mark{font-size:1rem;color:#f0442e}
+section{border-color:#29292e}
+.chips li{background:#111216;border-color:#303036}
+.edu li{border-color:#34343a}
+.social a{border-color:#f4f1ed}
+.social a:hover{background:#f4f1ed;color:#08090c}
+.project-card{background:#111216;border-color:#303036;box-shadow:0 18px 45px rgba(0,0,0,.35)}
+footer{border-color:#29292e}
+@media(max-width:700px){
+ .hero{min-height:0;padding:2.5rem 0 2rem}
+ .hero-layout{min-height:690px;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;gap:0}
+ .hero-backdrop-word{top:35%;left:-3%;font-size:clamp(5rem,20vw,9rem)}
+ .hero-copy{grid-column:1;grid-row:1;max-width:100%;margin:0;padding:0;z-index:4}
+ .hero-eyebrow{font-size:.58rem;letter-spacing:.13em;margin-bottom:1.1rem}
+ .hero-copy h1{font-size:clamp(3.5rem,15vw,6.2rem)}
+ .hero-copy h1 .hello-line{font-size:1.25rem}
+ .hero-copy .headline{max-width:330px;margin-top:.9rem;font-size:1rem}
+ .hero-copy .type{font-size:.68rem;margin-top:.75rem}
+ .hero-location{margin-top:1rem;font-size:.55rem}
+ .hero-portrait{grid-column:1;grid-row:2;justify-self:end;align-self:end;width:min(92%,440px);max-width:440px;margin:-1rem -1.5rem 1.8rem 0;transform:none}
+ .hero-portrait img{max-height:470px}
+ .hero-bottom-mark{font-size:.52rem;gap:.5rem}
+}
+@media(max-width:380px){.hero-layout{min-height:630px}.hero-portrait img{max-height:410px}.hero-backdrop-word{font-size:5rem}}
+@media(prefers-reduced-motion:reduce){.hero-portrait img{transition:none}}
+
 </style>
 </head>
 <body>
@@ -110,15 +165,19 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 
   <header class="hero">
     <div class="hero-layout">
+      <div class="hero-backdrop-word" aria-hidden="true">PORTFOLIO</div>
       <div class="hero-copy">
-        <h1>I am Nemindu Shan</h1>
-        <p class="headline" id="headline">Creative Technologist | Focused on Coding, Automation & Digital Solutions | Committed to Lifelong Learning</p>
-        <p class="type" aria-live="off">I’m skilled in <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
+        <p class="hero-eyebrow"><span class="eyebrow-dot"></span> CREATIVE TECHNOLOGIST <span class="eyebrow-line"></span> SRI LANKA</p>
+        <h1><span class="hello-line">Hello, I’m</span><span class="name-line">NEMINDU<br>SHAN<span class="name-period">.</span></span></h1>
+        <p class="headline" id="headline">Building ideas through technology, creativity and continuous learning.</p>
+        <p class="type" aria-live="off">INTERESTED IN <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
+        <p class="hero-location">BASED IN SRI LANKA <span>•</span> OPEN TO LEARNING &amp; COLLABORATION</p>
       </div>
       <div class="hero-portrait">
         <img src="assets/profile.png" alt="Portrait of Nemindu Shan" fetchpriority="high">
         <span class="portrait-light" aria-hidden="true"></span>
       </div>
+      <div class="hero-bottom-mark"><span>01</span> / INTRODUCTION <span class="hero-bottom-rule"></span> SCROLL TO EXPLORE <span class="scroll-mark">↓</span></div>
     </div>
   </header>
 
