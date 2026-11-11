@@ -62,6 +62,17 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 .tc::after{content:"";position:absolute;left:0;top:0;width:.07em;min-width:2px;height:100%;background:var(--accent);animation:blink 1s steps(1) infinite}
 @media (prefers-reduced-motion:reduce){.caret{animation:none}html{scroll-behavior:auto}}
 
+/* HELGRO project artwork */
+.helgro-media{display:grid;place-items:center;background:radial-gradient(ellipse at 70% 25%,rgba(185,205,130,.22),transparent 38%),linear-gradient(135deg,#102c25 0%,#174c3a 52%,#0a211d 100%)}
+.helgro-art{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;color:#f2f1df;overflow:hidden}
+.helgro-art::before,.helgro-art::after{content:"";position:absolute;width:48%;height:130%;border:1px solid rgba(222,232,184,.16);border-radius:50%;transform:rotate(35deg)}
+.helgro-art::after{width:66%;height:160%;transform:rotate(-35deg)}
+.helgro-symbol{display:grid;place-items:center;width:clamp(3.2rem,8vw,5.2rem);height:clamp(3.2rem,8vw,5.2rem);border:1px solid rgba(231,235,196,.75);border-radius:50%;font-size:clamp(2rem,5vw,3.3rem);font-weight:800;line-height:1;color:#dce7b4;box-shadow:0 0 35px rgba(196,218,143,.12)}
+.helgro-wordmark{margin-top:.7rem;font-size:clamp(1.4rem,4vw,2.6rem);font-weight:800;letter-spacing:.22em;padding-left:.22em}
+.helgro-caption{margin-top:.35rem;font-size:clamp(.48rem,1.2vw,.68rem);letter-spacing:.2em;color:#c0d1a0}
+.helgro-leaf{position:absolute;width:12%;height:22%;border:1px solid rgba(210,228,166,.32);border-radius:100% 0 100% 0;transform:rotate(28deg)}
+.helgro-leaf-one{left:18%;bottom:16%}.helgro-leaf-two{right:19%;top:17%;transform:rotate(205deg)}
+
 /* Project showcase */
 .project-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1.5rem}
 .project-card{--rx:0deg;--ry:0deg;--lift:0px;position:relative;overflow:hidden;display:block;background:var(--chip);border:1px solid var(--line);border-radius:22px;text-decoration:none;box-shadow:0 18px 45px rgba(20,27,52,.10);transform:perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--lift));transform-style:preserve-3d;transition:transform .18s ease-out,box-shadow .25s ease,border-color .25s ease}
@@ -363,6 +374,19 @@ img,svg,video,iframe{max-width:100%}
           <p>A Sri Lanka travel discovery platform created to help travellers explore destinations, find places to stay, discover local food, and access useful transport links — all in one convenient experience.</p>
           <div class="project-tags"><span>Web Design</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Sri Lanka Tourism</span></div>
           <p class="project-hint">Explore the live project ↗</p>
+        </div>
+      </a>
+      <a class="project-card" href="https://github.com/shankobewatta/helgro" target="_blank" rel="noopener noreferrer" aria-label="Open HELGRO project repository in a new tab">
+        <div class="project-media helgro-media">
+          <div class="helgro-art"><span class="helgro-symbol">H</span><span class="helgro-wordmark">HELGRO</span><span class="helgro-caption">SMART AGRICULTURE PLATFORM</span><span class="helgro-leaf helgro-leaf-one"></span><span class="helgro-leaf helgro-leaf-two"></span></div>
+          <div class="project-overlay"></div>
+          <span class="project-index">02 / WEB PROJECT</span>
+        </div>
+        <div class="project-content">
+          <div class="project-topline"><h3>HELGRO</h3><span class="project-arrow" aria-hidden="true">↗</span></div>
+          <p>A smart agriculture platform concept designed for Sri Lankan farmers, bringing farm planning and crop schedules into one place, including date-based planning for important activities such as fertilizer application and harvesting.</p>
+          <div class="project-tags"><span>AgriTech</span><span>Web Development</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Sri Lanka</span></div>
+          <p class="project-hint">View the project repository ↗</p>
         </div>
       </a>
     </div>
