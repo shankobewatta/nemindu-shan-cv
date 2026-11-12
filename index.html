@@ -316,6 +316,39 @@ img,svg,video,iframe{max-width:100%}
  .hero-portrait img{transform:none!important}
 }
 
+
+/* Project covers — cinematic, high-contrast launch panels */
+.project-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.35rem}
+.project-card{border:1px solid rgba(255,255,255,.11);border-radius:24px;background:linear-gradient(145deg,#17181d,#0d0e12 72%);box-shadow:0 22px 55px rgba(0,0,0,.32);transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s,border-color .28s}
+.project-card:hover,.project-card:focus-visible{--lift:-8px;border-color:rgba(255,91,66,.8);box-shadow:0 32px 75px rgba(0,0,0,.48),0 0 0 1px rgba(255,91,66,.13)}
+.project-media{aspect-ratio:16/9;isolation:isolate}
+.project-media::before{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;opacity:.8;background:linear-gradient(115deg,rgba(255,255,255,.12),transparent 27%,transparent 72%,rgba(255,255,255,.08));mix-blend-mode:screen}
+.project-media::after{content:"";position:absolute;z-index:2;left:-40%;top:0;width:30%;height:100%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-18deg);transition:left .75s cubic-bezier(.2,.8,.2,1)}
+.project-card:hover .project-media::after,.project-card:focus-visible .project-media::after{left:120%}
+.project-media img{filter:saturate(1.12) contrast(1.06)}
+.project-overlay{z-index:2;background:linear-gradient(180deg,rgba(5,7,12,.12),transparent 35%,rgba(5,7,12,.78))}
+.project-index{z-index:4;top:1.1rem;left:1.1rem;border-color:rgba(255,255,255,.3);background:rgba(7,9,14,.55);backdrop-filter:blur(12px);font-size:.68rem;letter-spacing:.14em}
+.project-live{position:absolute;z-index:4;right:1.1rem;top:1.1rem;display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .7rem;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(7,9,14,.55);color:#fff;font-size:.64rem;font-weight:800;letter-spacing:.13em;backdrop-filter:blur(12px)}
+.project-live::before{content:"";width:7px;height:7px;border-radius:50%;background:#75e0a2;box-shadow:0 0 12px #75e0a2}
+.project-launch{position:absolute;z-index:4;right:1.1rem;bottom:1rem;display:flex;align-items:center;gap:.65rem;color:#fff;font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.88;transform:translateY(5px);transition:transform .25s,opacity .25s}
+.project-launch span{display:grid;place-items:center;width:2rem;height:2rem;border:1px solid rgba(255,255,255,.65);border-radius:50%;font-size:1rem}
+.project-card:hover .project-launch,.project-card:focus-visible .project-launch{opacity:1;transform:translateY(0)}
+.project-content{padding:1.35rem clamp(1.1rem,3vw,1.7rem) 1.55rem}
+.project-topline h3{color:#f7f4f0}
+.project-arrow{width:2.8rem;height:2.8rem;background:#f0442e;box-shadow:0 6px 22px rgba(240,68,46,.28)}
+.project-card:hover .project-arrow,.project-card:focus-visible .project-arrow{transform:translate(4px,-4px) rotate(4deg);box-shadow:0 8px 26px rgba(240,68,46,.42)}
+.project-content p{color:#aaa6a1}
+.project-tags span{border-color:#35353b;background:rgba(255,255,255,.025);color:#d8d3cd}
+.project-hint{color:#ff735e!important;font-weight:700;letter-spacing:.035em}
+.ayubowan-media{background:radial-gradient(ellipse at 78% 18%,rgba(250,208,126,.7),transparent 22%),linear-gradient(145deg,#0c3d3b 0%,#176c62 42%,#d49b53 100%)}
+.ayubowan-media img{position:relative;z-index:0;opacity:.95}
+.helgro-media{background:radial-gradient(ellipse at 76% 30%,rgba(240,202,112,.24),transparent 28%),linear-gradient(145deg,#092c25,#1d6348 55%,#0d211d)}
+.helgro-media .helgro-art{transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .8s}
+.project-card:hover .helgro-media .helgro-art{transform:scale(1.055);filter:saturate(1.25)}
+.project-card:focus-visible{outline:3px solid #ff725e;outline-offset:4px}
+@media(max-width:760px){.project-grid{grid-template-columns:minmax(0,1fr);gap:1.1rem}.project-launch{opacity:1;transform:none}.project-media{aspect-ratio:16/9}}
+@media(hover:none),(prefers-reduced-motion:reduce){.project-card{transform:none!important}.project-media::after{display:none}.project-card:hover .helgro-media .helgro-art{transform:none}}
+
 </style>
 </head>
 <body>
@@ -370,19 +403,20 @@ img,svg,video,iframe{max-width:100%}
     <h2>Projects</h2>
     <div class="project-grid">
       <a class="project-card" href="https://shankobewatta.github.io/ayubowan-trails/" target="_blank" rel="noopener noreferrer" aria-label="Open Ayubowan Trails website in a new tab">
-        <div class="project-media">
+        <div class="project-media ayubowan-media">
           <img src="assets/ayubowan-trails-preview.svg" alt="Illustrated homepage preview for Ayubowan Trails, a Sri Lanka travel discovery website" loading="lazy">
           <div class="project-overlay"></div>
-          <span class="project-index">01 / WEB PROJECT</span>
+          <span class="project-index">01 / TRAVEL TECH</span>
+          <span class="project-live">LIVE EXPERIENCE</span><span class="project-launch">Launch project <span>↗</span></span>
         </div>
         <div class="project-content">
           <div class="project-topline"><h3>Ayubowan Trails</h3><span class="project-arrow" aria-hidden="true">↗</span></div>
           <p>A Sri Lanka travel discovery platform created to help travellers explore destinations, find places to stay, discover local food, and access useful transport links — all in one convenient experience.</p>
           <div class="project-tags"><span>Web Design</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Sri Lanka Tourism</span></div>
-          <p class="project-hint">Explore the live project ↗</p>
+          <p class="project-hint">Launch Ayubowan Trails ↗</p>
         </div>
       </a>
-      <a class="project-card" href="https://shankobewatta.github.io/helgro/" target="_blank" rel="noopener noreferrer" aria-label="Open HELGRO project repository in a new tab">
+      <a class="project-card" href="https://shankobewatta.github.io/helgro/" target="_blank" rel="noopener noreferrer" aria-label="Launch the HELGRO live agriculture platform in a new tab">
         <div class="project-media helgro-media" role="img" aria-label="HELGRO cover artwork with a golden sunrise over layered Sri Lankan mountains and green paddy fields">
           <div class="helgro-art">
             <span class="helgro-sun"></span><span class="helgro-haze"></span>
@@ -392,13 +426,14 @@ img,svg,video,iframe{max-width:100%}
             <span class="helgro-leaf helgro-leaf-one"></span><span class="helgro-leaf helgro-leaf-two"></span>
           </div>
           <div class="project-overlay"></div>
-          <span class="project-index">02 / WEB PROJECT</span>
+          <span class="project-index">02 / AGRITECH</span>
+          <span class="project-live">LIVE EXPERIENCE</span><span class="project-launch">Launch project <span>↗</span></span>
         </div>
         <div class="project-content">
           <div class="project-topline"><h3>HELGRO</h3><span class="project-arrow" aria-hidden="true">↗</span></div>
           <p>A smart agriculture platform concept designed for Sri Lankan farmers, bringing farm planning and crop schedules into one place, including date-based planning for important activities such as fertilizer application and harvesting.</p>
           <div class="project-tags"><span>AgriTech</span><span>Web Development</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Sri Lanka</span></div>
-          <p class="project-hint">View the project repository ↗</p>
+          <p class="project-hint">Launch HELGRO live app ↗</p>
         </div>
       </a>
     </div>
