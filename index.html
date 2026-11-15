@@ -351,9 +351,36 @@ img,svg,video,iframe{max-width:100%}
 @media(max-width:760px){.project-grid{grid-template-columns:minmax(0,1fr);gap:1.1rem}.project-launch{opacity:1;transform:none}.project-media{aspect-ratio:16/9}}
 @media(hover:none),(prefers-reduced-motion:reduce){.project-card{transform:none!important}.project-media::after{display:none}.project-card:hover .helgro-media .helgro-art{transform:none}}
 
+
+/* Interactive design tools: Grid Rise + Drafting Cursor */
+#grid-rise{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.34;mix-blend-mode:screen}
+#drafting-ui{position:fixed;inset:0;z-index:10000;pointer-events:none;opacity:0;transition:opacity .2s ease;color:#ff715d;font:10px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;--draft-x:-100px;--draft-y:-100px}
+body.drafting-active #drafting-ui{opacity:1}
+#drafting-ui::before,#drafting-ui::after{content:"";position:absolute;pointer-events:none;opacity:.5}
+#drafting-ui::before{top:0;left:0;right:0;height:17px;border-bottom:1px solid rgba(255,113,93,.22);background:repeating-linear-gradient(90deg,rgba(255,113,93,.7) 0 1px,transparent 1px 10px);mask-image:linear-gradient(to bottom,#000 0 6px,transparent 15px)}
+#drafting-ui::after{top:0;left:0;bottom:0;width:17px;border-right:1px solid rgba(255,113,93,.22);background:repeating-linear-gradient(180deg,rgba(255,113,93,.7) 0 1px,transparent 1px 10px);mask-image:linear-gradient(to right,#000 0 6px,transparent 15px)}
+#draft-crosshair-v,#draft-crosshair-h{position:absolute;background:rgba(255,113,93,.56);box-shadow:0 0 5px rgba(255,113,93,.18)}
+#draft-crosshair-v{top:0;bottom:0;left:var(--draft-x);width:1px}
+#draft-crosshair-h{left:0;right:0;top:var(--draft-y);height:1px}
+#draft-readout{position:absolute;left:calc(var(--draft-x) + 12px);top:calc(var(--draft-y) + 12px);padding:5px 7px;border:1px solid rgba(255,113,93,.45);border-radius:4px;background:rgba(8,9,12,.88);white-space:nowrap;letter-spacing:.04em}
+#draft-measure{position:absolute;left:0;top:0;height:1px;transform-origin:0 50%;background:#ff715d;box-shadow:0 0 8px rgba(255,113,93,.8);display:none}
+#draft-measure-label{position:absolute;display:none;padding:4px 6px;border-radius:3px;background:#ff715d;color:#08090c;font-weight:700;white-space:nowrap}
+#draft-hint{position:absolute;right:1rem;top:1.2rem;padding:6px 8px;border:1px solid rgba(255,113,93,.35);border-radius:4px;background:rgba(8,9,12,.82);color:#ff9b8c;letter-spacing:.08em}
+body.drafting-measuring{cursor:crosshair!important}
+@media(hover:none),(prefers-reduced-motion:reduce){#grid-rise,#drafting-ui{display:none}}
+
 </style>
 </head>
 <body>
+
+<canvas id="grid-rise" aria-hidden="true"></canvas>
+<div id="drafting-ui" aria-hidden="true">
+  <span id="draft-crosshair-v"></span><span id="draft-crosshair-h"></span>
+  <span id="draft-readout">X 0000 · Y 0000</span>
+  <span id="draft-measure"></span><span id="draft-measure-label"></span>
+  <span id="draft-hint">DRAFT MODE · DRAG TO MEASURE</span>
+</div>
+
 <div class="wrap">
   <nav aria-label="Sections" id="section-nav">
     <a href="#about" aria-current="location"><span class="nav-label"><span>About</span><span aria-hidden="true">About</span></span></a>
@@ -626,6 +653,52 @@ function pump(){if(busy)return;for(var x=0;x<secs.length;x++){var s=secs[x];if(s
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){secs.forEach(function(s){if(s.el===e.target){s.seen=true;io.unobserve(e.target)}});pump()}})},{rootMargin:'0px 0px -8% 0px'});secs.forEach(function(s){io.observe(s.el)})}else{secs.forEach(function(s){s.seen=true})}
 run(heroItems,function(){busy=false;if(window.startSkills)window.startSkills();pump()})
 })()}
+
+/* Grid Rise — lightweight pointer-reactive tile field */
+(function(){
+  var canvas=document.getElementById('grid-rise'),ctx=canvas&&canvas.getContext('2d');
+  if(!ctx||!window.matchMedia('(hover:hover) and (pointer:fine)').matches||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var w=0,h=0,dpr=1,points=[],px=-1000,py=-1000,raf=0,last=0;
+  function resize(){dpr=Math.min(window.devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);points=[];for(var y=26;y<h;y+=42)for(var x=26;x<w;x+=42)points.push([x,y]);draw(performance.now())}
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    points.forEach(function(p){
+      var dx=p[0]-px,dy=p[1]-py,dist=Math.sqrt(dx*dx+dy*dy),wave=Math.max(0,1-dist/230);
+      var ripple=wave*(Math.sin(dist*.055-t*.004)+1)*5;
+      var lift=wave*8+ripple,alpha=.08+wave*.23;
+      var x=p[0],y=p[1]-lift;
+      ctx.strokeStyle='rgba(255,112,91,'+alpha.toFixed(3)+')';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x-8,y-8);ctx.lineTo(x+8,y-8);ctx.lineTo(x+8,y+8);ctx.lineTo(x-8,y+8);ctx.closePath();ctx.stroke();
+      if(wave>.05){ctx.fillStyle='rgba(255,112,91,'+(wave*.045).toFixed(3)+')';ctx.fill()}
+    });
+    if(t-last>32){last=t;raf=requestAnimationFrame(draw)}
+  }
+  window.addEventListener('pointermove',function(e){px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(draw)});
+  window.addEventListener('pointerleave',function(){px=-1000;py=-1000});
+  window.addEventListener('resize',resize);resize();
+})();
+
+/* Drafting Cursor — viewport rulers, live coordinates and drag measurement */
+(function(){
+  var ui=document.getElementById('drafting-ui'),readout=document.getElementById('draft-readout'),line=document.getElementById('draft-measure'),label=document.getElementById('draft-measure-label');
+  if(!ui||!window.matchMedia('(hover:hover) and (pointer:fine)').matches||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var sx=0,sy=0,drag=false,active=false;
+  function point(e){
+    var x=Math.round(e.clientX),y=Math.round(e.clientY);
+    ui.style.setProperty('--draft-x',x+'px');ui.style.setProperty('--draft-y',y+'px');
+    readout.textContent='X '+String(x).padStart(4,'0')+' · Y '+String(y).padStart(4,'0');
+    if(drag){
+      var dx=e.clientX-sx,dy=e.clientY-sy,len=Math.sqrt(dx*dx+dy*dy),angle=Math.atan2(dy,dx)*180/Math.PI;
+      line.style.display='block';line.style.left=sx+'px';line.style.top=sy+'px';line.style.width=len+'px';line.style.transform='rotate('+angle+'deg)';
+      label.style.display='block';label.style.left=((sx+e.clientX)/2+8)+'px';label.style.top=((sy+e.clientY)/2-18)+'px';label.textContent=Math.round(len)+' px  /  '+Math.round(Math.abs(dx))+' × '+Math.round(Math.abs(dy));
+    }
+  }
+  window.addEventListener('pointermove',function(e){active=true;document.body.classList.add('drafting-active');point(e)});
+  window.addEventListener('pointerdown',function(e){if(e.button!==0||e.target.closest('a,button,input,textarea,select'))return;drag=true;sx=e.clientX;sy=e.clientY;document.body.classList.add('drafting-measuring');line.style.display='block';label.style.display='block';point(e)});
+  window.addEventListener('pointerup',function(){if(!drag)return;drag=false;document.body.classList.remove('drafting-measuring')});
+  window.addEventListener('blur',function(){drag=false;document.body.classList.remove('drafting-measuring')});
+})();
+
 </script>
 </body>
 </html>
