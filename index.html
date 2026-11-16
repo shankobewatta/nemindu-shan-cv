@@ -190,10 +190,12 @@ body::after{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;opa
 .hero-button-primary:hover{background:#ff6048;border-color:#ff6048}
 .hero-button-ghost{background:rgba(255,255,255,.025);color:#f4f1ed}
 .hero-button-ghost:hover{background:rgba(255,255,255,.09);border-color:#aaa19b}
-.cursor-aura,.cursor-core{position:fixed;left:0;top:0;z-index:50;pointer-events:none;border-radius:50%;opacity:0;transform:translate(-50%,-50%);transition:opacity .2s ease}
-.cursor-aura{width:34px;height:34px;border:1px solid rgba(255,91,67,.75);transition:width .25s ease,height .25s ease,opacity .2s ease,border-color .2s ease}
-.cursor-core{width:5px;height:5px;background:#ff5a43}
-.cursor-aura.cursor-active{width:54px;height:54px;background:rgba(240,68,46,.08);border-color:#ff5a43}
+.cursor-aura,.cursor-core{position:fixed;left:0;top:0;z-index:10001;pointer-events:none;border-radius:50%;opacity:0;transform:translate(-50%,-50%);will-change:left,top,width,height;transition:opacity .22s ease,border-color .25s ease,background .25s ease,width .32s cubic-bezier(.2,.8,.2,1),height .32s cubic-bezier(.2,.8,.2,1),border-radius .32s cubic-bezier(.2,.8,.2,1),transform .32s cubic-bezier(.2,.8,.2,1)}
+.cursor-aura{width:38px;height:38px;border:1px solid rgba(255,112,91,.88);background:rgba(240,68,46,.025);box-shadow:0 0 22px rgba(240,68,46,.08)}
+.cursor-core{width:5px;height:5px;background:#ff715d;box-shadow:0 0 10px rgba(255,91,67,.75);transition:opacity .18s ease,transform .18s ease}
+.cursor-aura.cursor-active{border-color:#ff715d;background:rgba(240,68,46,.10);box-shadow:0 0 30px rgba(240,68,46,.18)}
+.cursor-aura.cursor-press{transform:translate(-50%,-50%) scale(.82)}
+.cursor-core.cursor-hidden{opacity:0;transform:translate(-50%,-50%) scale(.25)}
 body.cursor-ready .cursor-aura,body.cursor-ready .cursor-core{opacity:1}
 @media(hover:hover) and (pointer:fine){body.cursor-ready,body.cursor-ready a,body.cursor-ready button{cursor:none}}
 @media(max-width:700px){.hero-actions{gap:.55rem;margin-top:1.2rem}.hero-button{min-height:44px;padding:.65rem .8rem;font-size:.75rem}.hero-portrait{animation:portraitEnterMobile 1s .2s both cubic-bezier(.16,1,.3,1)}@keyframes portraitEnterMobile{from{opacity:0;transform:translateY(25px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}}
@@ -571,34 +573,29 @@ if("IntersectionObserver" in window){
   portrait.addEventListener('pointerleave',leave);
 })();
  
-// Minimal custom cursor and gentle magnetic CTA interaction on desktop
+// Custom Cursor — smooth ring + dot that morphs around hovered elements
 (function(){
-  if(!window.matchMedia||!window.matchMedia('(hover:hover) and (pointer:fine)').matches||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var aura=document.createElement('span'),core=document.createElement('span');
-  aura.className='cursor-aura';core.className='cursor-core';
-  document.body.appendChild(aura);document.body.appendChild(core);
-  var x=-100,y=-100,ax=-100,ay=-100,raf=0;
-  function follow(){
-    ax+=(x-ax)*.22;ay+=(y-ay)*.22;
-    aura.style.left=ax+'px';aura.style.top=ay+'px';
-    if(Math.abs(x-ax)>.15||Math.abs(y-ay)>.15){raf=requestAnimationFrame(follow)}else{raf=0}
-  }
-  document.addEventListener('pointermove',function(e){
-    x=e.clientX;y=e.clientY;core.style.left=x+'px';core.style.top=y+'px';
-    if(!raf)raf=requestAnimationFrame(follow);
-    document.body.classList.add('cursor-ready');
-  });
-  document.querySelectorAll('a,button').forEach(function(el){
-    el.addEventListener('pointerenter',function(){aura.classList.add('cursor-active')});
-    el.addEventListener('pointerleave',function(){aura.classList.remove('cursor-active')});
-  });
-  document.querySelectorAll('.magnetic').forEach(function(el){
-    el.addEventListener('pointermove',function(e){
-      var r=el.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
-      el.style.transform='translate('+(dx*.10).toFixed(1)+'px,'+(dy*.14).toFixed(1)+'px)';
-    });
-    el.addEventListener('pointerleave',function(){el.style.transform=''});
-  });
+ if(!window.matchMedia||!window.matchMedia('(hover:hover) and (pointer:fine)').matches||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ var ring=document.createElement('span'),dot=document.createElement('span');
+ ring.className='cursor-aura';dot.className='cursor-core';document.body.appendChild(ring);document.body.appendChild(dot);
+ var x=-100,y=-100,rx=-100,ry=-100,raf=0,hovered=null;
+ function animate(){rx+=(x-rx)*.24;ry+=(y-ry)*.24;ring.style.left=rx+'px';ring.style.top=ry+'px';if(Math.abs(x-rx)>.12||Math.abs(y-ry)>.12)raf=requestAnimationFrame(animate);else raf=0}
+ function move(e){x=e.clientX;y=e.clientY;dot.style.left=x+'px';dot.style.top=y+'px';document.body.classList.add('cursor-ready');if(!raf)raf=requestAnimationFrame(animate)}
+ function morph(target){
+  if(hovered===target)return;hovered=target;
+  if(!target){ring.classList.remove('cursor-active');ring.style.width='38px';ring.style.height='38px';ring.style.borderRadius='50%';dot.classList.remove('cursor-hidden');return}
+  var r=target.getBoundingClientRect(),w=Math.max(48,Math.min(118,r.width+18)),h=Math.max(48,Math.min(76,r.height+18));
+  ring.style.width=w+'px';ring.style.height=h+'px';ring.style.borderRadius=(w>h*1.25?'18px':'50%');ring.classList.add('cursor-active');
+  if(target.matches('input,textarea,[contenteditable="true"]'))dot.classList.add('cursor-hidden');else dot.classList.remove('cursor-hidden');
+ }
+ var selector='a,button,.project-card,.chips li,.hero-button,input,textarea,[role="button"]';
+ document.addEventListener('pointermove',move,{passive:true});
+ document.addEventListener('pointerover',function(e){morph(e.target.closest(selector))});
+ document.addEventListener('pointerout',function(e){var n=e.relatedTarget&&e.relatedTarget.closest?e.relatedTarget.closest(selector):null;if(!n)morph(null)});
+ document.addEventListener('pointerdown',function(){ring.classList.add('cursor-press')});
+ document.addEventListener('pointerup',function(){ring.classList.remove('cursor-press')});
+ document.addEventListener('pointerleave',function(){document.body.classList.remove('cursor-ready');morph(null)});
+ document.querySelectorAll('.magnetic').forEach(function(el){el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);el.style.transform='translate('+(dx*.10).toFixed(1)+'px,'+(dy*.14).toFixed(1)+'px)'});el.addEventListener('pointerleave',function(){el.style.transform=''})});
 })();
  
 // Subtle 3D depth tilt for project cards (pointer devices only)
