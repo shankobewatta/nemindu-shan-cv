@@ -79,6 +79,21 @@ footer{padding:2rem 0 3rem;border-top:1px solid var(--line);color:var(--muted);f
 .helgro-tagline{margin:.7rem 0 0 .15rem;font-size:clamp(.65rem,1.4vw,.9rem);letter-spacing:.035em;color:#f0e8d0}
 .helgro-leaf{position:absolute;z-index:1;width:10%;height:20%;border:1px solid rgba(227,226,174,.36);border-radius:100% 0 100% 0;transform:rotate(28deg)}
 .helgro-leaf-one{right:14%;bottom:20%}.helgro-leaf-two{right:27%;bottom:10%;transform:rotate(205deg)}
+
+/* SeatLK project cover */
+.seatlk-media{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 110%,rgba(30,116,255,.32),transparent 58%),linear-gradient(135deg,#071329,#102b52 58%,#07101f);color:#f5f8ff}
+.seatlk-glow{position:absolute;width:58%;aspect-ratio:1;border:1px solid rgba(107,177,255,.2);border-radius:50%;box-shadow:0 0 0 24px rgba(107,177,255,.035),0 0 0 52px rgba(107,177,255,.025)}
+.seatlk-panel{position:relative;z-index:1;width:min(76%,560px);padding:clamp(1rem,3vw,2rem);border:1px solid rgba(174,207,255,.28);border-radius:18px;background:rgba(8,22,45,.72);box-shadow:0 22px 65px rgba(0,0,0,.35);backdrop-filter:blur(12px)}
+.seatlk-brand{display:flex;align-items:center;gap:.65rem;font-size:clamp(1.25rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.05em}
+.seatlk-mark{display:grid;place-items:center;width:2rem;height:2rem;border-radius:9px;background:#347dff;color:white;font-size:1.1rem}
+.seatlk-sub{margin:.15rem 0 1rem;color:#a9c6f2;font-size:.65rem;letter-spacing:.18em}
+.seatlk-map{display:grid;grid-template-columns:repeat(8,1fr);gap:clamp(4px,1vw,8px);padding:clamp(.65rem,2vw,1rem);border:1px solid rgba(174,207,255,.18);border-radius:12px;background:rgba(255,255,255,.035)}
+.seatlk-map i{display:block;aspect-ratio:1;border-radius:4px;background:#2fba83;box-shadow:0 0 10px rgba(47,186,131,.12)}
+.seatlk-map i:nth-child(5n),.seatlk-map i:nth-child(13n){background:#f04d56}
+.seatlk-map i:nth-child(7n){background:#ffc44e}
+.seatlk-legend{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.8rem;color:#c5d7f3;font-size:.68rem}
+.seatlk-legend span{display:flex;align-items:center;gap:.35rem}.seatlk-legend b{width:7px;height:7px;border-radius:2px;background:#2fba83}.seatlk-legend span:nth-child(2) b{background:#f04d56}.seatlk-legend span:nth-child(3) b{background:#ffc44e}
+
 /* Project showcase */
 .project-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1.5rem}
 .project-card{--rx:0deg;--ry:0deg;--lift:0px;position:relative;overflow:hidden;display:block;background:var(--chip);border:1px solid var(--line);border-radius:22px;text-decoration:none;box-shadow:0 18px 45px rgba(20,27,52,.10);transform:perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--lift));transform-style:preserve-3d;transition:transform .18s ease-out,box-shadow .25s ease,border-color .25s ease}
@@ -455,6 +470,26 @@ img,svg,video,iframe{max-width:100%}
           <p>An automotive owner-care platform concept for EV drivers, bringing vehicle guidance, common-problem troubleshooting, charging-station discovery, service history, and maintenance reminders into one digital dashboard.</p>
           <div class="project-tags"><span>Automotive Tech</span><span>EV Owner Care</span><span>JavaScript</span><span>Responsive UI</span><span>AI Assistant Concept</span></div>
           <p class="project-hint">Launch Evolution Auto ↗</p>
+        </div>
+      </a>
+      <a class="project-card" href="https://shankobewatta.github.io/seatlk/" target="_blank" rel="noopener noreferrer" aria-label="Open SeatLK ticketing platform in a new tab">
+        <div class="project-media seatlk-media" role="img" aria-label="SeatLK ticketing interface preview with a stadium seat map and colour-coded seat availability">
+          <span class="seatlk-glow"></span>
+          <div class="seatlk-panel">
+            <div class="seatlk-brand"><span class="seatlk-mark">S</span> seat.lk</div>
+            <p class="seatlk-sub">SRI LANKA EVENT TICKETING</p>
+            <div class="seatlk-map" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="seatlk-legend"><span><b></b>Available</span><span><b></b>Booked</span><span><b></b>Selected</span></div>
+          </div>
+          <div class="project-overlay"></div>
+          <span class="project-index">04 / EVENT TECH</span>
+          <span class="project-live">PROJECT PREVIEW</span><span class="project-launch">Launch project <span>↗</span></span>
+        </div>
+        <div class="project-content">
+          <div class="project-topline"><h3>SeatLK</h3><span class="project-arrow" aria-hidden="true">↗</span></div>
+          <p>A Sri Lankan event-ticketing platform concept for discovering sports venues and live shows, exploring indoor and outdoor stadiums, and selecting seats through interactive venue maps with clear availability indicators.</p>
+          <div class="project-tags"><span>Event Tech</span><span>Interactive Seat Maps</span><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive Design</span></div>
+          <p class="project-hint">Explore SeatLK ↗</p>
         </div>
       </a>
     </div>
