@@ -384,6 +384,41 @@ img,svg,video,iframe{max-width:100%}
 @media(max-width:700px){.motion-ready .reveal-item{translate:0 14px;filter:blur(3px)}}
 @media(prefers-reduced-motion:reduce){#scroll-progress{display:none}.motion-ready .reveal-item,.motion-ready section h2{opacity:1;translate:none;filter:none;clip-path:none;transition:none}}
 
+
+/* Clean four-project glass showcase */
+.project-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.15rem;align-items:stretch}
+.project-card{
+  display:flex;flex-direction:column;min-width:0;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+  box-shadow:0 12px 34px rgba(0,0,0,.22);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.project-card:hover{border-color:rgba(240,68,46,.55);box-shadow:0 18px 42px rgba(0,0,0,.3)}
+.project-media{aspect-ratio:16/8.8;flex:0 0 auto}
+.project-content{padding:1rem 1.1rem 1.15rem;transform:none;display:flex;flex:1;flex-direction:column}
+.project-topline h3{font-size:clamp(1.12rem,1.7vw,1.4rem)}
+.project-content p{font-size:.94rem;line-height:1.5;margin:.5rem 0 .8rem}
+.project-tags{gap:.35rem}
+.project-tags span{font-size:.72rem;padding:.22rem .55rem}
+.project-hint{margin-top:auto;padding-top:.65rem;font-size:.78rem}
+.project-index{font-size:.68rem;padding:.28rem .58rem}
+.project-launch{font-size:.72rem}
+@media(max-width:700px){
+ .project-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+ .project-content{padding:.8rem}
+ .project-content p{font-size:.84rem}
+ .project-tags span{font-size:.66rem}
+}
+@media(max-width:480px){
+ .project-grid{grid-template-columns:minmax(0,1fr);gap:1rem}
+ .project-media{aspect-ratio:16/9}
+ .project-content{padding:1rem}
+ .project-content p{font-size:.92rem}
+ .project-tags span{font-size:.72rem}
+}
+
 </style>
 </head>
 <body>
@@ -472,18 +507,18 @@ img,svg,video,iframe{max-width:100%}
           <p class="project-hint">Launch HELGRO live app ↗</p>
         </div>
       </a>
-      <a class="project-card" href="https://shankobewatta.github.io/evolution-auto/" target="_blank" rel="noopener noreferrer" aria-label="Open Evolution Auto Owner Care website in a new tab">
+      <a class="project-card" href="https://shankobewatta.github.io/evolution-auto/" target="_blank" rel="noopener noreferrer" aria-label="Open EV Owner Hub website in a new tab">
         <div class="project-media evolution-media">
-          <img src="assets/evolution-auto-preview.svg" alt="Evolution Auto Owner Care dashboard preview with an electric vehicle silhouette" loading="lazy">
+          <img src="assets/evolution-auto-preview.svg" alt="EV Owner Hub dashboard preview with an electric vehicle silhouette" loading="lazy">
           <div class="project-overlay"></div>
           <span class="project-index">03 / AUTOMOTIVE TECH</span>
           <span class="project-live">LIVE EXPERIENCE</span><span class="project-launch">Launch project <span>↗</span></span>
         </div>
         <div class="project-content">
-          <div class="project-topline"><h3>Evolution Auto</h3><span class="project-arrow" aria-hidden="true">↗</span></div>
-          <p>An automotive owner-care platform concept for EV drivers, bringing vehicle guidance, common-problem troubleshooting, charging-station discovery, service history, and maintenance reminders into one digital dashboard.</p>
+          <div class="project-topline"><h3>EV Owner Hub</h3><span class="project-arrow" aria-hidden="true">↗</span></div>
+          <p>A digital companion for EV owners, bringing vehicle guidance, charging discovery and essential maintenance tools into one place.</p>
           <div class="project-tags"><span>Automotive Tech</span><span>EV Owner Care</span><span>JavaScript</span><span>Responsive UI</span><span>AI Assistant Concept</span></div>
-          <p class="project-hint">Launch Evolution Auto ↗</p>
+          <p class="project-hint">Launch Explore EV Owner Hub ↗</p>
         </div>
       </a>
       <a class="project-card" href="https://shankobewatta.github.io/seatlk/" target="_blank" rel="noopener noreferrer" aria-label="Open SeatLK ticketing platform in a new tab">
